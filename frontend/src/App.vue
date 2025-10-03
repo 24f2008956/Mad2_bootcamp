@@ -1,15 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <div>
+    <p>Hello {{ name }}</p>
+    <HelloWorld/>
+    <div v-if="fruits">
+      <p v-for="fruit in fruits" :key="fruit">{{ fruit }}</p>
+    </div>
+  </div>
+ 
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue"
 
 export default {
   name: 'App',
-  components: {
+
+  data(){
+    return {
+    name : "Ramya",
+    fruits : null
+    }
+    
+  },
+  components:{
     HelloWorld
+  },
+  mounted(){
+    const l = ["apple, banana"]
+    this.fruits = l
   }
 }
 </script>

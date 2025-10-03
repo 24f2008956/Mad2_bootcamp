@@ -21,3 +21,6 @@ with app.app_context():
         datastore.create_user(name="d1" ,email = 'user1@gmail.com', password = hash_password('pass'), roles = ['user'] )
     db.session.commit()
     print("Initial data created")
+    
+    admin_role= datastore.find_role( "admin")
+    print(admin_role.users[0].email)

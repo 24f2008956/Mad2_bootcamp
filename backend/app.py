@@ -9,7 +9,7 @@ def create_app():
     db.init_app(app)
     
     datastore = SQLAlchemyUserDatastore(db, User, Role)
-    app.security = Security(app, datastore = datastore  )
+    app.security = Security(app, datastore = datastore, register_blueprint = False)
     app.app_context().push()
     return app
 
