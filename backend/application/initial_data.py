@@ -6,7 +6,7 @@ from flask_security import hash_password
 with app.app_context():
     db.create_all()
     
-    datastore:SQLAlchemyUserDatastore = app.security.datastore
+    datastore = app.security.datastore
 
     if not datastore.find_role("admin"):
         datastore.create_role(name="admin", description="superuser")
@@ -22,5 +22,4 @@ with app.app_context():
     db.session.commit()
     print("Initial data created")
     
-    admin_role= datastore.find_role( "admin")
-    print(admin_role.users[0].email)
+  

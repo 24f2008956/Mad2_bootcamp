@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import UserMixin, RoleMixin
+from sqlalchemy.types import JSON
 
 db = SQLAlchemy()
 
@@ -53,5 +54,4 @@ class Booking(db.Model):
     in_time = db.Column(db.DateTime, default=lambda: datetime.now(pytz.timezone('Asia/Kolkata')))
     out_time = db.Column(db.DateTime, nullable=True)
     cost = db.Column(db.Float, nullable=True)
-    
     parking_lot = db.relationship('Parking_lot', backref='bookings')
