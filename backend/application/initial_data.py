@@ -19,6 +19,8 @@ with app.app_context():
         datastore.create_user(name ="admin" , email = 'admin@gmail.com', password = hash_password('pass'), roles = ['admin'] )
     if (not datastore.find_user(email = 'user1@gmail.com')):
         datastore.create_user(name="d1" ,email = 'user1@gmail.com', password = hash_password('pass'), roles = ['user'] )
+            
+   
     db.session.commit()
     print("Initial data created")
     

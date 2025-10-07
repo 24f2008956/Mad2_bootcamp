@@ -3,13 +3,16 @@ from application.models import db, User, Role, UserRoles
 from flask_security import Security, SQLAlchemyUserDatastore
 from application.config import LocalDevelopmentConfig
 from flask_cors import CORS
+from application.api import api
 
 def create_app():
-    app = Flask(__name__ )
+    app = Flask(__name__)
     print(app.static_folder)
     app.config.from_object(LocalDevelopmentConfig)
     db.init_app(app)
     CORS(app)
+    api.init_app(app)
+
     
     datastore = SQLAlchemyUserDatastore(db, User, Role)
     app.security = Security(app, datastore = datastore , register_blueprint=False )
