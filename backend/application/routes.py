@@ -50,6 +50,6 @@ def register():
 
 @app.route("/dashboard/admin")
 @auth_required('token')
-@roles_required('admin')
+@roles_required('user')
 def admin_route():
     return "welcome to admin dashboard"

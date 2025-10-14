@@ -10,9 +10,8 @@ def create_app():
     print(app.static_folder)
     app.config.from_object(LocalDevelopmentConfig)
     db.init_app(app)
-    CORS(app)
     api.init_app(app)
-
+    CORS(app)
     
     datastore = SQLAlchemyUserDatastore(db, User, Role)
     app.security = Security(app, datastore = datastore , register_blueprint=False )
