@@ -3,14 +3,27 @@ import { createRouter,createWebHistory } from "vue-router";
 import login from './components/LoginComp.vue';
 import HomeComp from './components/HomeComp.vue';
 import RegisterComp from './components/RegisterComp.vue';
-import Dashboard from "./components/dashboard.vue";
-
+import admindashboard from './pages/admindashboard.vue';
+import userdashboard from './pages/userdashboard.vue';
+import parkinglots from "./components/parking_lot.vue";
+import EditLot from "./components/edit_lot.vue";
+//import CreateLot from "./components/create_lot.vue";
 const routes = [
     {path:"/", component: HomeComp},
     {path:"/login", component: login},
     {path:"/register", component: RegisterComp},
-    {path:"/dashboard", component:Dashboard}
-
+    {path: "/admin/dashboard",component: admindashboard,
+        children: [
+            {
+            path: "parkinglot",
+            component: parkinglots
+            }
+        
+           
+        ]
+    },
+    {path: '/admin/parking_lots/:id/edit', component: EditLot, props: true},
+    {path:"/user/dashboard", component:userdashboard}
 ]
 
 

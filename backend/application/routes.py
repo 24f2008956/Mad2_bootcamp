@@ -3,6 +3,8 @@ from flask_security import verify_password,auth_required,roles_required,hash_pas
 from flask import request,render_template
 from .models import db
 from datetime import datetime
+from .task import test_task , csv_down_ad
+from celery.result import AsyncResult
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -53,3 +55,43 @@ def register():
 @roles_required('user')
 def admin_route():
     return "welcome to admin dashboard"
+
+@app.route("/first-task")
+def first_task():
+    result = test_task.delay()
+    
+    return {"task_id" : result.id} 
+
+@app.route("/check-first-task/<id>")
+def check_first_task(id):
+    if id:
+        # taskid = request.args.get("task_id")
+        result =AsyncResult(id)
+        return { 
+            "ready" : result.ready(),
+            "succesful" : result.successful(),
+            "result" : result.result if result.ready() else None
+        }
+    
+    else:
+        return {"message" :"provide the task id"}
+
+
+
+
+@app.route("/api/admin_export_csv")
+def admin_export_csv():
+    result = csv_down_ad.delay()
+    
+    return {"task_id" : result.id} 
+
+
+@app.route("/api/check_admin_export_csv")
+def check_admin_export_csv():
+    if request.args.get("taskid"):
+        result = AsyncResult(request.args.get("taskid"))
+        
+        if not result.ready():
+            return {"message" : "Retry"} , 404
+        else:
+            return send_from_directory("./static" , path = result.result ) , 200 

@@ -1,5 +1,5 @@
 <template>
-
+    
     <div class="container justify-content-center d-flex mt-5">
 
         <div class="card" style="width:18rem;">
@@ -56,7 +56,11 @@ export default ({
                 const data = await response.json()
                 if (response.status === 200) {
                     localStorage.setItem("token", data.token);
-                    this.$router.push("/dashboard");
+                    if (data.role==="user")
+                        this.$router.push(`/user/dashboard`);
+                    else if (data.role === "admin"){
+                        this.$router.push(`/admin/dashboard`);
+                    }
                 }
                 else {
                     this.errorMessage = data.message
